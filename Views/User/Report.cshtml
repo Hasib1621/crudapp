@@ -1,0 +1,48 @@
+﻿@model IEnumerable<IGrouping<string, crudapp.ViewModel.UsersDepartmentViewModel>>
+@{
+    ViewBag.Title = "Department Wise Report";
+}
+
+<h2>Department Wise Report</h2>
+<table class="table table-bordered">
+    <tr>
+        <th>Department Name</th>
+        <th>User Name</th>
+        <th>User Email</th>
+        <th>User Age</th>
+        <th>Total Users</th>
+    </tr>
+
+    @foreach (var group in Model)
+    {
+
+        <tr>
+            @{
+                var c = 0;
+            }
+            @*<td rowspan="@group.Count()">@group.Key</td>*@
+            @foreach (var item in group)
+            {
+            <tr>
+                @if (c == 0)
+                {
+                    @*c++;*@
+                    <td rowspan="@group.Count()">@group.Key</td>
+                }
+                <td>@item.Name</td>
+                <td>@item.Email</td>
+                <td>@item.Age</td>
+                @if (c == 0)
+                {
+                    c++;
+                    <td rowspan="@group.Count()">@group.Count()</td>
+                }
+            </tr>
+        }
+            </tr>
+        }
+</table>
+
+<br />
+<a href="@Url.Action("GenerateExcel", "User")" class="btn btn-primary">Download Excel</a>
+
